@@ -1,57 +1,52 @@
 package com.driver.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "reservation")
 public class Reservation {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private Integer numberOfHours;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int id;
+
+    private int numberOfHours;
 
     @ManyToOne
     @JoinColumn
-    @JsonIgnore
-    private User user;
-
-    //    @OneToOne
-    //    @JoinTable
-    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Payment payment;
+    User user;
 
     @ManyToOne
     @JoinColumn
-    @JsonIgnore
-    private Spot spot;
+    Spot spot;
+
+    @OneToOne(mappedBy = "reservation",cascade = CascadeType.ALL)
+    Payment payment;
 
     public Reservation() {
     }
 
-    public Reservation(Integer id, Integer numberOfHours, User user, Payment payment, Spot spot) {
+    public Reservation(int id, int numberOfHours, User user, Spot spot, Payment payment) {
         this.id = id;
         this.numberOfHours = numberOfHours;
         this.user = user;
-        this.payment = payment;
         this.spot = spot;
+        this.payment = payment;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Integer getNumberOfHours() {
+    public int getNumberOfHours() {
         return numberOfHours;
     }
 
-    public void setNumberOfHours(Integer noOfHours) {
+    public void setNumberOfHours(int numberOfHours) {
         this.numberOfHours = numberOfHours;
     }
 
@@ -63,19 +58,19 @@ public class Reservation {
         this.user = user;
     }
 
-    public Payment getPayment() {
-        return payment;
-    }
-
-    public void setPayment(Payment payment) {
-        this.payment = payment;
-    }
-
     public Spot getSpot() {
         return spot;
     }
 
     public void setSpot(Spot spot) {
         this.spot = spot;
+    }
+
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 }

@@ -1,38 +1,29 @@
 package com.driver.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "parkinglot")
+@Table(name="parkingLot")
 public class ParkingLot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     private String name;
     private String address;
 
-    @OneToMany(mappedBy = "parkingLot", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Spot> spotList = new ArrayList<>();
+    @OneToMany(mappedBy = "parkingLot",cascade = CascadeType.ALL)
+    List<Spot> spotList=new ArrayList<>();
 
     public ParkingLot() {
     }
-    public ParkingLot(Integer id, String name, String address, List<Spot> spotList) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.spotList = spotList;
-    }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -60,8 +51,11 @@ public class ParkingLot {
         this.spotList = spotList;
     }
 
-    public String toString(){
-        String str = ""+this.getId()+"=>"+this.getName()+"=>"+this.getSpotList()+"=>"+this.getAddress();
-        return str;
+    public ParkingLot(int id, String name, String address, List<Spot> spotList) {
+        this.id=id;
+        this.name = name;
+        this.address = address;
+        this.spotList = spotList;
     }
+
 }

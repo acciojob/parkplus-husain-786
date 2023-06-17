@@ -1,41 +1,39 @@
 package com.driver.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "payment")
 public class Payment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
+
+    private boolean paymentCompleted;
+    @Enumerated(value = EnumType.STRING)
     private PaymentMode paymentMode;
-    private Boolean paymentCompleted;
 
     @OneToOne
     @JoinColumn
-    @JsonIgnore
-    private Reservation reservation;
+    Reservation reservation;
 
-    public Payment() {
-    }
-    public Payment(Integer id, PaymentMode paymentMode, Boolean paymentCompleted, Reservation reservation) {
-        this.id = id;
-        this.paymentMode = paymentMode;
+    public Payment(boolean paymentCompleted, PaymentMode paymentMode, Reservation reservation) {
         this.paymentCompleted = paymentCompleted;
+        this.paymentMode = paymentMode;
         this.reservation = reservation;
     }
 
-    public boolean isPaymentCompleted(){
-        return true;
-    }
-    public Integer getId() {
-        return id;
+    public Payment() {
+
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public boolean isPaymentCompleted() {
+        return paymentCompleted;
+    }
+
+    public void setPaymentCompleted(boolean paymentCompleted) {
+        this.paymentCompleted = paymentCompleted;
     }
 
     public PaymentMode getPaymentMode() {
@@ -44,14 +42,6 @@ public class Payment {
 
     public void setPaymentMode(PaymentMode paymentMode) {
         this.paymentMode = paymentMode;
-    }
-
-    public Boolean getPaymentCompleted() {
-        return paymentCompleted;
-    }
-
-    public void setPaymentCompleted(Boolean paymentCompleted) {
-        this.paymentCompleted = paymentCompleted;
     }
 
     public Reservation getReservation() {

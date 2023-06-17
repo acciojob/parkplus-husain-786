@@ -1,7 +1,5 @@
 package com.driver.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,42 +7,39 @@ import java.util.List;
 @Entity
 @Table(name = "spot")
 public class Spot {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
     @Enumerated(value = EnumType.STRING)
     private SpotType spotType;
-    private Integer pricePerHour;
-    private Boolean occupied;
-
-    @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Reservation> reservationList = new ArrayList<>();
+    private int pricePerHour;
+    Boolean occupied=false;
 
     @ManyToOne
     @JoinColumn
-    @JsonIgnore
-//    @JsonIgnore
-    private ParkingLot parkingLot;
+    ParkingLot parkingLot;
+
+    @OneToMany(mappedBy = "spot",cascade = CascadeType.ALL)
+    List<Reservation> reservationList=new ArrayList<>();
 
     public Spot() {
-        this.occupied=false;
     }
 
-    public Spot(Integer id, SpotType spotType, Integer pricePerHour, Boolean occupied, List<Reservation> reservationList, ParkingLot parkingLot) {
+    public Spot(int id, SpotType spotType, int pricePerHour, Boolean occupied, ParkingLot parkingLot, List<Reservation> reservationList) {
         this.id = id;
         this.spotType = spotType;
         this.pricePerHour = pricePerHour;
         this.occupied = occupied;
-        this.reservationList = reservationList;
         this.parkingLot = parkingLot;
+        this.reservationList = reservationList;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -56,28 +51,20 @@ public class Spot {
         this.spotType = spotType;
     }
 
-    public Integer getPricePerHour() {
+    public int getPricePerHour() {
         return pricePerHour;
     }
 
-    public void setPricePerHour(Integer pricePerHour) {
+    public void setPricePerHour(int pricePerHour) {
         this.pricePerHour = pricePerHour;
     }
 
     public Boolean getOccupied() {
-        return this.occupied;
+        return occupied;
     }
 
     public void setOccupied(Boolean occupied) {
         this.occupied = occupied;
-    }
-
-    public List<Reservation> getReservationList() {
-        return reservationList;
-    }
-
-    public void setReservationList(List<Reservation> reservationList) {
-        this.reservationList = reservationList;
     }
 
     public ParkingLot getParkingLot() {
@@ -88,8 +75,11 @@ public class Spot {
         this.parkingLot = parkingLot;
     }
 
-//    public String toString(){
-//        String str = ""+this.getId()+"=>"+this.getSpotType()+"=>"+this.getPricePerHour()+"=>"+this.getParkingLot();
-//        return str;
-//    }
+    public List<Reservation> getReservationList() {
+        return reservationList;
+    }
+
+    public void setReservationList(List<Reservation> reservationList) {
+        this.reservationList = reservationList;
+    }
 }
