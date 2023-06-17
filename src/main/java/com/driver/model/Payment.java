@@ -24,6 +24,9 @@ public class Payment {
         this.reservation = reservation;
     }
 
+    public boolean isPaymentCompleted(){
+        return true;
+    }
     public Integer getId() {
         return id;
     }
