@@ -1,5 +1,7 @@
 package com.driver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,18 +12,23 @@ public class Spot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Enumerated(value = EnumType.STRING)
     private SpotType spotType;
     private Integer pricePerHour;
     private Boolean occupied;
 
     @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Reservation> reservationList = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn
+    @JsonIgnore
+//    @JsonIgnore
     private ParkingLot parkingLot;
 
     public Spot() {
+        this.occupied=false;
     }
 
     public Spot(Integer id, SpotType spotType, Integer pricePerHour, Boolean occupied, List<Reservation> reservationList, ParkingLot parkingLot) {
@@ -58,7 +65,7 @@ public class Spot {
     }
 
     public Boolean getOccupied() {
-        return occupied;
+        return this.occupied;
     }
 
     public void setOccupied(Boolean occupied) {
@@ -80,4 +87,9 @@ public class Spot {
     public void setParkingLot(ParkingLot parkingLot) {
         this.parkingLot = parkingLot;
     }
+
+//    public String toString(){
+//        String str = ""+this.getId()+"=>"+this.getSpotType()+"=>"+this.getPricePerHour()+"=>"+this.getParkingLot();
+//        return str;
+//    }
 }

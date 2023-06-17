@@ -1,5 +1,7 @@
 package com.driver.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Payment {
 
     @OneToOne
     @JoinColumn
+    @JsonIgnore
     private Reservation reservation;
 
     public Payment() {
